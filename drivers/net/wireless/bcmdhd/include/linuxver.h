@@ -2,9 +2,9 @@
  * Linux-specific abstractions to gain some independence from linux kernel versions.
  * Pave over some 2.2 versus 2.4 versus 2.6 kernel differences.
  *
- * Copyright (C) 1999-2012, Broadcom Corporation
+ * Copyright (C) 1999-2011, Broadcom Corporation
  * 
- *      Unless you and Broadcom execute a separate written software license
+ *         Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
  * under the terms of the GNU General Public License version 2 (the "GPL"),
  * available at http://www.broadcom.com/licenses/GPLv2.php, with the
@@ -22,8 +22,9 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
- * $Id: linuxver.h 309909 2012-01-21 00:15:02Z $
+ * $Id: linuxver.h 312264 2012-02-02 00:49:43Z $
  */
+
 
 #ifndef _linuxver_h_
 #define _linuxver_h_
@@ -71,8 +72,6 @@
 #include <linux/netdevice.h>
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
 #include <linux/semaphore.h>
-#else
-#include <asm/semaphore.h>
 #endif 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 28))
 #undef IP_TOS
@@ -218,10 +217,10 @@ extern void pci_unregister_driver(struct pci_driver *drv);
 #undef WL_USE_NETDEV_OPS
 #endif
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 31)) && defined(CONFIG_RFKILL)
-#define WL_CONFIG_RFKILL
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 31)) && defined(CONFIG_RFKILL_INPUT)
+#define WL_CONFIG_RFKILL_INPUT
 #else
-#undef WL_CONFIG_RFKILL
+#undef WL_CONFIG_RFKILL_INPUT
 #endif
 
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(2, 3, 48))
@@ -470,7 +469,7 @@ typedef struct {
 	long 	thr_pid;
 	int 	prio; 
 	struct	semaphore sema;
-	int	terminated;
+	bool	terminated;
 	struct	completion completed;
 } tsk_ctl_t;
 
