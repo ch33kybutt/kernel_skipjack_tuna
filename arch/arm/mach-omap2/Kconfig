@@ -414,8 +414,6 @@ config OMAP4_ARM_ERRATA_743622
 	  This is handled for HS devices in the PPA code and does not need to be
 	  enabled."
 
-endmenu
-
 config FORCE_FAST_CHARGE
 	bool "Force AC charge mode at will"
 	default y
@@ -424,3 +422,6 @@ config FORCE_FAST_CHARGE
 	  are detected as USB to charge as AC.
 
 endif
+
+endmenu
+
